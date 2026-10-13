@@ -1,0 +1,301 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+p.flushright {
+  text-align: right;
+}
+blockquote > p:last-child {
+  text-align: right;
+}
+blockquote > p:first-child {
+  text-align: inherit;
+}
+.header-section-number {
+  padding-right: .2em;
+  font-weight: 500;
+}
+.level1 .header-section-number {
+  display: inline-block;
+  border-bottom: 3px solid;
+}
+.level1 h1 {
+  border-bottom: 1px solid;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+h1.title {
+  font-weight: 700;
+}
+.book .book-body .page-wrapper .page-inner section.normal strong {
+  font-weight: 600;
+}
+
+body {
+  line-height: 1.5;
+}
+
+/* make headings clearly bold */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
+
+/* feature cards with a bit of color */
+.feature-card {
+  border-left: 4px solid #3498db;
+  background-color: #f8fbff;
+  padding: 0.6em 0.9em;
+  margin: 0.4em 0 0.8em 0;
+  border-radius: 6px;
+}
+.feature-card ul {
+  margin-bottom: 0;
+}
+.feature-card-missing {
+  border-left-color: #7f8c8d;
+  background-color: #f4f6f7;
+}
+
+/* colored badges for p_perm */
+.badge {
+  display: inline-block;
+  padding: 0.1em 0.5em;
+  border-radius: 999px;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #ffffff;
+}
+.badge-sig {
+  background-color: #27ae60;
+}
+.badge-nonsig {
+  background-color: #c0392b;
+}
+.badge-unknown {
+  background-color: #7f8c8d;
+}
+
+/* pill for T_obs_stand */
+.stat-pill {
+  display: inline-block;
+  padding: 0.1em 0.5em;
+  border-radius: 999px;
+  background-color: #ecf0f1;
+  font-weight: 600;
+}
+
+/* generic image + placeholder styling */
+img {
+  max-width: 100%;
+  height: auto;
+}
+.no-plot {
+  padding: 1em;
+  text-align: center;
+  font-style: italic;
+  color: #7f8c8d;
+  border-radius: 4px;
+  border: 1px dashed #bdc3c7;
+  background-color: #fdfefe;
+  margin-bottom: 1em;
+}
+
+/* full-width, square-ish plot container */
+.plot-square {
+  width: 100%;
+  margin: 0 0 1.5em 0;
+  aspect-ratio: 1 / 1;
+}
+
+/* make the inner content fill the container */
+.plot-square img,
+.plot-square iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* iframe for interactive plots */
+.feature-iframe {
+  border: none;
+}
+
+/* back link */
+.back-link {
+  margin-top: 0.5em;
+  margin-bottom: 1.5em;
+}
+.back-link a {
+  font-size: 0.9em;
+}
+
+/* LEFT sidebar (main TOC) */
+.sidebar {
+  background-color: #f8f9fa !important;
+  border-right: 1px solid #e2e2e2 !important;
+}
+
+.sidebar .book-toc ul {
+  padding-left: 0.8em;
+}
+
+.sidebar .book-toc li a {
+  font-size: 0.92em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #2c3e50 !important;
+}
+
+.sidebar .book-toc li a:hover {
+  background-color: #e8f4ff;
+  color: #000 !important;
+}
+
+/* highlight active chapter */
+.sidebar .active > a {
+  background-color: #007bff22 !important;
+  font-weight: 600 !important;
+  border-left: 3px solid #007bff;
+}
+
+/* RIGHT floating TOC ("On this page") */
+#toc {
+  background-color: #ffffff;
+  border: 1px solid #e2e2e2;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+#toc a {
+  font-size: 0.9em;
+  color: #37474f !important;
+}
+
+#toc a:hover {
+  color: #007bff !important;
+}
+
+.summary-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1.5em;
+  font-size: 0.9em;
+}
+
+.summary-table th,
+.summary-table td {
+  border: 1px solid #dddddd;
+  padding: 0.35em 0.6em;
+}
+
+.summary-table th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+  text-align: left;
+}
+
+.summary-table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* hover highlight */
+.summary-table tr:hover {
+  background-color: #e8f4ff;
+}
+
+/* p_perm in DELTA tables: green below 0.05, bold below 0.01; grey for manual
+   features above 0.05 */
+.summary-table td.p-strong  { color: #1a7f37; font-weight: 700; }
+.summary-table td.p-sig     { color: #1a7f37; font-weight: 600; }
+.summary-table td.p-nonsig  { color: #555; }
+.summary-table td.p-unknown { color: #999; }
+
+/* inline plots (demographics) keep their own aspect ratio */
+.plot-inline { margin: 0 0 1.5em 0; }
+.plot-inline img { display: block; max-width: 100%; height: auto; }
+
+/* =========================
+   Tabs without JS (radio-based)
+   ========================= */
+
+.ph-tabs {
+  border-top: 1px solid #e1e4e8;
+  margin-top: 0.8em;
+  padding-top: 0.4em;
+}
+
+/* radio inputs are hidden; the labels act as tabs */
+.ph-tabs .ph-tab-input {
+  display: none;
+}
+
+.ph-tabs-nav {
+  margin-bottom: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.ph-tabs .ph-tab-label {
+  display: inline-block;
+  border: 1px solid #d0d4da;
+  border-bottom: none;
+  padding: 0.2em 0.8em;
+  background: #f7f7f9;
+  cursor: pointer;
+  font-size: 0.9em;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  margin-right: 0.25rem;
+  scroll-margin-top: 100vh; /* so clicking a tab does not scroll the page */
+}
+
+.ph-tabs-panels {
+  margin-top: 0.4em;
+}
+
+/* panels are hidden unless their tab is checked */
+.ph-tabs .ph-tab-panel {
+  display: none;
+}
+
+/* active tab label */
+.ph-tabs .ph-tab-input[data-tab="scatter"]:checked ~ .ph-tabs-nav .ph-tab-label[data-tab="scatter"],
+.ph-tabs .ph-tab-input[data-tab="deltaplot"]:checked ~ .ph-tabs-nav .ph-tab-label[data-tab="deltaplot"],
+.ph-tabs .ph-tab-input[data-tab="ecdf"]:checked     ~ .ph-tabs-nav .ph-tab-label[data-tab="ecdf"] {
+  background: #ffffff;
+  font-weight: 600;
+  border-bottom: 1px solid #ffffff;
+}
+
+/* active panel */
+.ph-tabs .ph-tab-input[data-tab="scatter"]:checked ~ .ph-tabs-panels .ph-tab-panel[data-tab="scatter"],
+.ph-tabs .ph-tab-input[data-tab="deltaplot"]:checked ~ .ph-tabs-panels .ph-tab-panel[data-tab="deltaplot"],
+.ph-tabs .ph-tab-input[data-tab="ecdf"]:checked     ~ .ph-tabs-panels .ph-tab-panel[data-tab="ecdf"] {
+  display: block;
+}
+
+/* ---- callouts ---- */
+.callout {
+  border-left: 4px solid #999;
+  background: #f7f7f9;
+  padding: 0.75em 1em;
+  margin: 1em 0;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.95em;
+}
+.callout-note { border-left-color: #4C72B0; background: #eef3fa; }
+.callout-warn { border-left-color: #C44E52; background: #fbeeee; }
+.callout-none { border-left-color: #8c8c8c; background: #f2f2f2; }

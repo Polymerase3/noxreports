@@ -1,0 +1,37 @@
+# DELTA overview {#delta-overview}
+
+The DELTA features of each comparison. A feature is listed when it passes the
+filter (m<sub>eff</sub> &gt; `r book$delta$min_m_eff` and `p_perm` &lt; 0.05)
+and is among the `r book$delta$top_n` highest phipflow weighted scores of its
+rank and direction, or when it is listed under `delta: features` in
+`report_config.yml` (marked "manual"). Each feature links to its plots.
+
+- **Feature**: taxon or protein (annotation with the protein ID in brackets).
+- **Peptides**: enriched peptides contributing to the statistic.
+- **T_obs_stand**: standardized Stouffer statistic of the prevalence shift.
+- **p_perm**: raw permutation p-value; bold below 0.01.
+- **max_delta**: largest peptide-level prevalence difference.
+- **Score**: phipflow's weighted score, |T_obs_stand| × max_delta with each
+  scaled to 0-1 within the rank; compare it within a rank only.
+- **Direction**: which group has the higher prevalence.
+
+<div class="callout callout-warn">
+`p_perm` is **uncorrected**. Every comparison tests thousands of features, so
+many will pass a 0.05 threshold by chance alone. The tables are
+hypothesis-generating, not a list of established findings.
+</div>
+
+```{r, results='asis'}
+for (cmp in book$comparisons) {
+  n <- delta_counts(cmp)
+  cat(cmp_heading(cmp, 2, "delta-summary"))
+  if (!is.na(n[["tested"]])) {
+    cat(sprintf("%d features tested, %d pass the filter, %d shown (%d added by hand). ",
+                n[["tested"]], n[["passing"]], n[["shown"]], n[["manual"]]))
+    sig <- file.path(cmp_base(cmp), "DELTA_framework",
+                     sprintf("delta_table_m_eff_gt%s_p_perm_lt0.05.csv", book$delta$min_m_eff))
+    cat(nox_link(sig, "Download all passing features (CSV)"), "\n\n")
+  }
+  cat(feature_table(cmp), "\n\n")
+}
+```

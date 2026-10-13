@@ -1,0 +1,76 @@
+# General analyses {#general}
+
+Global repertoire patterns per comparison, before the feature-level DELTA
+results. Each comparison has its own page.
+
+```{r}
+# Enrichment, alpha and beta diversity of one phipflow analysis directory
+# (a comparison or a group's all/ directory), relative to the results.
+diversity_block <- function(base, label) {
+  cat("## Enrichment counts\n\n")
+  cat(nox_img(file.path(base, "enrichment_counts.svg"), paste("Enrichment counts:", label)), "\n\n")
+
+  cat("## Alpha diversity\n\n")
+  cat(nox_img(file.path(base, "alpha_diversity", "plot.svg"), paste("Alpha diversity:", label)), "\n\n")
+  cat("### Species-level richness\n\n")
+  cat(nox_img(file.path(base, "alpha_diversity", "plot_species.svg"),
+              paste("Alpha diversity (species):", label)), "\n\n")
+
+  beta <- file.path(base, "beta_diversity")
+  cat("## Beta diversity\n\n")
+  cat("### Scree plot\n\n")
+  cat(nox_img(file.path(beta, "scree_plot.svg"), paste("Scree plot:", label)), "\n\n")
+  cat("### PCoA\n\n")
+  cat(nox_img(file.path(beta, "pcoa_plot.svg"), paste("PCoA:", label)), "\n\n")
+  if (file.exists(res_fs(file.path(beta, "capscale_plot.svg")))) {
+    cat("### CAP (constrained ordination)\n\n")
+    cat(nox_img(file.path(beta, "capscale_plot.svg"), paste("CAP:", label)), "\n\n")
+  }
+  cat("### PERMANOVA\n\n")
+  cat(permanova_table(base), "\n\n")
+  cat(callout(paste("R<sup>2</sup> is the share of repertoire variance explained by the grouping.",
+                    "A small p-value on a very small R<sup>2</sup> is a consistent but minor shift.")),
+      "\n\n")
+  cat("### Dispersion test\n\n")
+  cat(dispersion_table(base), "\n\n")
+  cat(nox_img(file.path(beta, "dispersion_plot.svg"), paste("Dispersion:", label)), "\n\n")
+  cat("### t-SNE (2D)\n\n")
+  cat(nox_img(file.path(beta, "tsne2d_plot.svg"), paste("t-SNE 2D:", label)), "\n\n")
+  if (isTRUE(book$interactive)) {
+    cat("### t-SNE (3D, interactive)\n\n")
+    cat(nox_iframe(file.path(beta, "tsne3d_plot.html"), paste("t-SNE 3D:", label)), "\n\n")
+  }
+}
+```
+
+```{r, results='asis'}
+for (g in names(book$groups)) {
+  if (!isTRUE(book$groups[[g]]$all)) next
+  cat("\n\n# All samples: ", md_escape(g), " {#general-all-", slugify(g), "}\n\n", sep = "")
+  cat("All samples of the phipflow group `", g, "` together (phipflow `--all TRUE`).\n\n", sep = "")
+  diversity_block(file.path(g, "all"), paste("all samples,", g))
+}
+
+for (cmp in book$comparisons) {
+  base <- cmp_base(cmp)
+  cat(cmp_heading(cmp, 1, "general"))
+  cat(cmp_intro(cmp))
+  diversity_block(base, cmp$label)
+
+  if (isTRUE(cmp$stability)) {
+    cat("## Repertoire stability\n\n")
+    cat("Within- vs between-individual similarity; the [stability page](#stability-", cmp$id,
+        ") has the heatmap and combined view.\n\n", sep = "")
+    cat(similarity_block(cmp), "\n\n")
+    cat(nox_img(file.path(base, "similarity", "kulczynski_boxplot.svg"),
+                paste("Within vs between similarity:", cmp$label)), "\n\n")
+  }
+
+  cat("## POP framework\n\n")
+  for (r in pop_ranks(base)) {
+    cat("### ", if (r == "peptide_id") "Peptide level" else paste("By", gsub("_", " ", r)), "\n\n", sep = "")
+    plots <- file.path(base, "POP_framework", "plots", paste0(r, c("_interactive.html", "_static.svg")))
+    cat(nox_plot(plots[1], plots[2], paste("POP", r, cmp$label)), "\n\n")
+  }
+}
+```

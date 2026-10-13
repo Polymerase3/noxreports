@@ -1,0 +1,11 @@
+book_filename: "{{book_filename}}"
+delete_merged_file: true
+# Runs before every chapter: loads noxreports and `book` (report_config.yml).
+before_chapter_script: "_common.R"
+language:
+  label:
+    fig: "Figure "
+    tab: "Table "
+# There is deliberately no rmd_files list: every .Rmd file in this folder is a
+# chapter, in alphabetical order after index.Rmd. Files whose names start with
+# "_" are skipped; rename one to switch the chapter on or off.

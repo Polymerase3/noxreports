@@ -1,0 +1,27 @@
+# Cohort and demographics {#demographics}
+
+Age and sex from the metadata columns set under `columns` in
+`report_config.yml`.
+
+- **Unpaired comparisons** (different subjects in the two groups): age is
+  compared with a Welch t-test and a Wilcoxon rank-sum test, sex with Fisher's
+  exact test.
+- **Paired comparisons** (the same subjects at two timepoints): both groups are
+  the same people, so no test applies.
+
+The cohort table counts subjects once; the per-comparison tables count samples.
+
+## Cohort overview
+
+```{r, results='asis'}
+cat(cohort_table(book))
+```
+
+```{r, results='asis'}
+for (cmp in book$comparisons) {
+  cat(cmp_heading(cmp, 2, "demo"))
+  cat(demographics_table(cmp), "\n\n")
+  cat(demographics_tests(cmp), "\n\n")
+  cat(age_plot(cmp), "\n\n")
+}
+```

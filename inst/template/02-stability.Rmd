@@ -1,0 +1,49 @@
+# Repertoire stability {#stability}
+
+This chapter covers the **paired (longitudinal) comparisons**, where the same
+subjects were sampled at two timepoints. Stability is measured as **Kulczynski
+similarity** between samples, split into two sets of pairs:
+
+- **Within individual**: a subject's first timepoint against their own second
+  timepoint, one pair per subject.
+- **Between individuals**: every pair of samples from two different subjects.
+
+Comparing the two sets asks whether a person's antibody repertoire is a stable
+personal signature, or drifts so much that two timepoints of the same person
+look no more alike than samples of different people. Unpaired comparisons
+contrast different people, so they have no within-individual pairs and no
+stability page.
+
+```{r, results='asis'}
+stable <- Filter(function(x) isTRUE(x$stability), book$comparisons)
+if (!length(stable)) {
+  cat(no_plot("No comparison has stability: true in report_config.yml."), "\n\n")
+}
+
+for (cmp in stable) {
+  base <- file.path(cmp_base(cmp), "similarity")
+  cat(cmp_heading(cmp, 1, "stability"))
+  cat(cmp_intro(cmp))
+
+  cat("## Within- vs between-individual similarity\n\n")
+  cat(similarity_block(cmp), "\n\n")
+  cat("### Distribution\n\n")
+  cat(nox_img(file.path(base, "kulczynski_boxplot.svg"), paste("Similarity distribution:", cmp$label)), "\n\n")
+  cat("### Combined view\n\n")
+  cat(nox_img(file.path(base, "kulczynski_combined.svg"), paste("Combined similarity view:", cmp$label)), "\n\n")
+  cat("### Pairwise similarity heatmap\n\n")
+  cat(callout(paste("Each cell is one sample pair. Paired timepoints of the same subject form a",
+                    "bright diagonal when repertoires are individually stable.")), "\n\n")
+  cat(nox_img(file.path(base, "kulczynski_heatmap.svg"), paste("Similarity heatmap:", cmp$label)), "\n\n")
+
+  cat("## DELTA outcome\n\n")
+  n <- delta_counts(cmp)
+  if (is.na(n[["passing"]]) || n[["passing"]] == 0) {
+    cat(callout(sprintf(paste("<strong>No DELTA features</strong> with m<sub>eff</sub> &gt; %s and",
+                              "p_perm &lt; 0.05 in this comparison."), book$delta$min_m_eff), "none"), "\n\n")
+  } else {
+    cat(n[["passing"]], " features pass the DELTA filter; see the [DELTA overview](#delta-summary-",
+        cmp$id, ").\n\n", sep = "")
+  }
+}
+```

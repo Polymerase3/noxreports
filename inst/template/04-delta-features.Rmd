@@ -1,0 +1,24 @@
+# DELTA features {#delta-features}
+
+One page per comparison with DELTA features. Each feature has a summary card
+and phipflow's plots:
+
+- **Scatterplot**: peptide prevalence in the two groups, the feature's peptides
+  highlighted (interactive when `interactive: true` in `report_config.yml`).
+- **Δ-plot**: peptide-level prevalence differences.
+- **ECDF plot**: cumulative distribution of those differences.
+
+```{r, results='asis'}
+for (cmp in book$comparisons) {
+  feats <- delta_features(cmp)
+  if (is.null(feats) || !nrow(feats)) next
+  cat(cmp_heading(cmp, 1, "delta"))
+  cat(cmp_intro(cmp))
+  for (i in seq_len(nrow(feats))) {
+    row <- feats[i, ]
+    cat("\n\n## ", md_escape(feature_title(row)), " {#", feature_id(cmp, row), "}\n\n", sep = "")
+    cat(feature_card(row), "\n\n")
+    cat(feature_tabs(cmp, row), "\n\n")
+  }
+}
+```

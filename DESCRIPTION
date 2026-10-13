@@ -1,0 +1,35 @@
+Package: noxreports
+Title: Editable 'bookdown' Reports for 'phipflow' PhIP-Seq Results
+Version: 0.1.0
+Authors@R:
+    person("Mateusz Franciszek", "Kolek", email = "mati.kolek13@gmail.com",
+           role = c("aut", "cre"))
+Description: Deploys an editable 'bookdown' book next to the results of the
+    'phipflow' PhIP-seq pipeline and renders it: cohort demographics, a FastQC
+    summary, alpha and beta diversity, repertoire stability, POP and DELTA
+    results. Results are linked in place rather than copied, and a bundle
+    command zips the rendered book with only the files it references.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Depends:
+    R (>= 4.1)
+Imports:
+    bookdown,
+    data.table,
+    fs,
+    ggplot2,
+    grDevices,
+    htmltools,
+    jsonlite,
+    knitr,
+    stats,
+    svglite,
+    utils,
+    yaml,
+    zip
+Suggests:
+    testthat (>= 3.0.0),
+    withr
+Config/testthat/edition: 3

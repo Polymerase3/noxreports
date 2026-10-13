@@ -1,0 +1,107 @@
+---
+title: "{{title}}"
+author: "{{author}}"
+date: "`r format(Sys.Date(), '%Y-%m-%d')`"
+site: bookdown::bookdown_site
+---
+
+# About this report {#about}
+
+This report summarises the PhIP-seq antibody repertoire analysis of
+**`r book$project`**, produced by the `phipflow` pipeline. Figures and tables
+are read from the phipflow results (`r book$results_dir`) when the book is
+rendered; the results are linked, not copied.
+
+```{r, results='asis'}
+cat(cohort_numbers(book))
+```
+
+```{r, results='asis'}
+cat(fastqc_tile(book))
+```
+
+## Comparisons
+
+PERMANOVA R² is the share of repertoire variance explained by the grouping.
+DELTA counts are features tested, features passing the significance filter and
+features shown in this report (see [DELTA overview](#delta-overview)).
+
+```{r, results='asis'}
+cat(comparison_table(book))
+```
+
+## Key findings
+
+<!-- Write the interpretation here: headline results, caveats such as
+     confounders, and what to follow up. -->
+
+<div class="callout callout-warn">
+Not written yet: summarise the main results in the "Key findings" section of
+`index.Rmd`.
+</div>
+
+## Report structure
+
+- **Cohort and demographics**: age and sex for the cohort and per comparison,
+  with tests where the groups are different people. Present when the metadata
+  has age or sex.
+- **General analyses**: per comparison, enrichment counts, alpha diversity,
+  beta diversity (PCoA, CAP, PERMANOVA, dispersion, t-SNE) and the POP
+  prevalence plots.
+- **Repertoire stability**: within- versus between-individual similarity, for
+  paired (longitudinal) comparisons only.
+- **DELTA overview**: the selected DELTA features of every comparison, each
+  linking to its detail page.
+- **DELTA features**: per feature, its statistics and the scatter, Δ and ECDF
+  plots.
+
+Chapters are the `.Rmd` files of the book directory. Edit them, add your own,
+or switch one off by renaming it with a leading `_` (see `README.md` in the
+book directory).
+
+## What each analysis shows
+
+### Enrichment counts
+How many peptides are called enriched per sample, by group. Large systematic
+shifts can be biology, but can equally be batch or sequencing-depth effects.
+
+### Alpha diversity
+Within-sample repertoire richness. Sensitive to immune exposure history, but
+also to technical factors; read it alongside age and sex.
+
+### Beta diversity
+Between-sample differences on a Kulczynski distance matrix, with PCoA, CAP,
+PERMANOVA and a dispersion test.
+
+- If **PERMANOVA is significant but dispersion also differs**, the separation
+  may come from unequal variability rather than a consistent shift.
+- **R² matters as much as the p-value**: a small p-value on a very small R²
+  is a consistent but minor shift.
+- **t-SNE is for visualisation only**; use the distance-based tests for
+  inference.
+
+### POP framework
+Prevalence comparisons at peptide level and across taxonomic ranks. Each point
+is a feature; the axes give its prevalence in the two groups, so the distance
+from the diagonal shows the size of the difference.
+
+### DELTA framework
+A permutation test for prevalence shifts of taxa and proteins
+(`r paste(unique(stats::na.omit(vapply(book$comparisons, delta_permutations, 1L))), collapse = " / ")`
+permutations per feature). A feature passes when its effective number of
+peptides m<sub>eff</sub> &gt; `r book$delta$min_m_eff` and `p_perm` &lt; 0.05.
+
+- **`p_perm`** is the raw permutation p-value, **not corrected** for the
+  thousands of features tested per comparison: expect false positives and
+  treat the feature lists as hypothesis-generating.
+- **Direction** tells which group has the higher prevalence; **`max_delta`** is
+  the largest peptide-level prevalence difference.
+- This report shows, per rank and direction, the `r book$delta$top_n`
+  passing features with the highest phipflow **weighted score**
+  (|T_obs_stand| and max_delta, each scaled to 0-1 within the rank, multiplied),
+  plus any features added by hand in `report_config.yml`.
+
+### Similarity (paired comparisons only)
+Within-subject versus between-subject Kulczynski similarity: how stable a
+person's repertoire is over time compared with how different people are from
+each other.

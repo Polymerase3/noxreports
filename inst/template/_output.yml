@@ -1,0 +1,11 @@
+bookdown::gitbook:
+  css: style.css
+  split_by: chapter
+  config:
+    sharing: null
+    toc:
+      collapse: section
+      before: |
+        <li><a href="./">{{title_html}}</a></li>
+      after: |
+        <li>Built with noxreports</li>

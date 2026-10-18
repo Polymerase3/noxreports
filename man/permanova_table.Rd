@@ -37,7 +37,9 @@ comparison (\code{\link[=cmp_base]{cmp_base()}}) or a group's \code{all} directo
 \item \code{permanova_table()}, \code{dispersion_table()}: phipflow's PERMANOVA and
 dispersion test results as report tables.
 \item \code{permanova_result()}: the first PERMANOVA row as a list (\code{R2}, \code{p_value}, ...).
-\item \code{pop_ranks()}: the ranks with POP plots, peptide level first.
+\item \code{pop_ranks()}: the ranks with POP plots. \code{pop: ranks} in
+\code{report_config.yml} selects and orders them; without that key every rank
+phipflow plotted is shown, peptide level first.
 \item \code{group_sizes()}: samples and subjects per group of a comparison.
 \item \code{cmp_intro()}: question, design and group sizes, for the top of a page.
 }

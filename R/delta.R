@@ -153,10 +153,10 @@ delta_permutations <- function(cmp, book = current_book()) {
 #'   annotation with the protein ID in brackets.
 #' * `feature_id()`: the HTML id of the feature's section.
 #' * `feature_plot()`: path of one of phipflow's per-feature plots (`type`
-#'   "scatter", "deltaplot" or "ecdf"; only the scatter has an interactive
-#'   version).
+#'   "profile", "scatter", "deltaplot" or "ecdf"; only the scatter has an
+#'   interactive version, and only protein features have a profile plot).
 #' * `feature_card()`: the statistics box.
-#' * `feature_tabs()`: the plots in three tabs, with a link back to the DELTA
+#' * `feature_tabs()`: the plots in tabs, with a link back to the DELTA
 #'   overview.
 #' * `feature_table()`: the DELTA overview table of a comparison.
 #'
@@ -179,12 +179,13 @@ feature_id <- function(cmp, row) paste0("feat-", cmp$id, "-", row$slug)
 
 #' @rdname feature_title
 #' @export
-feature_plot <- function(cmp, feature, type = c("scatter", "deltaplot", "ecdf"), interactive = FALSE) {
+feature_plot <- function(cmp, feature, type = c("scatter", "deltaplot", "ecdf", "profile"), interactive = FALSE) {
   type <- match.arg(type)
   suffix <- switch(type,
     scatter = if (interactive) "_scatter_interactive.html" else "_scatter_static.svg",
     deltaplot = "_deltaplot_static.svg",
-    ecdf = "_ecdfplot_static.svg")
+    ecdf = "_ecdfplot_static.svg",
+    profile = "_profileplot_static.svg")
   file.path(cmp_base(cmp), "DELTA_framework", "interesting_features",
             sprintf("%s%s", phipflow_slug(feature), suffix))
 }
@@ -235,6 +236,10 @@ feature_tabs <- function(cmp, row, book = current_book()) {
   }
   name <- paste0("tabs-", feature_id(cmp, row))
   tabs <- c(scatter = "Scatterplot", deltaplot = "&#916;-plot", ecdf = "ECDF plot")
+  # phipflow writes a profile plot for protein features only; it leads the tabs
+  if (file.exists(res_fs(feature_plot(cmp, row$feature, "profile"), book))) {
+    tabs <- c(profile = "Profile plot", tabs)
+  }
   plot_of <- function(tp) {
     alt <- paste(tabs[[tp]], row$feature)
     if (tp == "scatter") {
@@ -246,7 +251,8 @@ feature_tabs <- function(cmp, row, book = current_book()) {
   paste0(
     '<div class="ph-tabs">',
     paste0(sprintf('<input type="radio" class="ph-tab-input" data-tab="%s" name="%s" id="%s-%s"%s>',
-                   names(tabs), name, name, names(tabs), c(" checked", "", "")), collapse = ""),
+                   names(tabs), name, name, names(tabs),
+                   c(" checked", rep("", length(tabs) - 1L))), collapse = ""),
     '<div class="ph-tabs-nav">',
     paste0(sprintf('<label class="ph-tab-label" for="%s-%s" data-tab="%s">%s</label>',
                    name, names(tabs), names(tabs), tabs), collapse = ""),

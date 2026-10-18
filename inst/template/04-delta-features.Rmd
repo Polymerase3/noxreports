@@ -3,6 +3,8 @@
 One page per comparison with DELTA features. Each feature has a summary card
 and phipflow's plots:
 
+- **Profile plot** (protein features only): prevalence of every library peptide
+  along the protein, with the longest run of overlapping hit peptides shaded.
 - **Scatterplot**: peptide prevalence in the two groups, the feature's peptides
   highlighted (interactive when `interactive: true` in `report_config.yml`).
 - **Δ-plot**: peptide-level prevalence differences.

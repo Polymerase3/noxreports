@@ -1,6 +1,6 @@
 Package: noxreports
 Title: Editable 'bookdown' Reports for 'phipflow' PhIP-Seq Results
-Version: 0.1.0
+Version: 0.1.1
 Authors@R:
     person("Mateusz Franciszek", "Kolek", email = "mati.kolek13@gmail.com",
            role = c("aut", "cre"))

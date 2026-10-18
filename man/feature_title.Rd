@@ -16,7 +16,7 @@ feature_id(cmp, row)
 feature_plot(
   cmp,
   feature,
-  type = c("scatter", "deltaplot", "ecdf"),
+  type = c("scatter", "deltaplot", "ecdf", "profile"),
   interactive = FALSE
 )
 
@@ -45,10 +45,10 @@ feature_table(cmp, book = current_book())
 annotation with the protein ID in brackets.
 \item \code{feature_id()}: the HTML id of the feature's section.
 \item \code{feature_plot()}: path of one of phipflow's per-feature plots (\code{type}
-"scatter", "deltaplot" or "ecdf"; only the scatter has an interactive
-version).
+"profile", "scatter", "deltaplot" or "ecdf"; only the scatter has an
+interactive version, and only protein features have a profile plot).
 \item \code{feature_card()}: the statistics box.
-\item \code{feature_tabs()}: the plots in three tabs, with a link back to the DELTA
+\item \code{feature_tabs()}: the plots in tabs, with a link back to the DELTA
 overview.
 \item \code{feature_table()}: the DELTA overview table of a comparison.
 }

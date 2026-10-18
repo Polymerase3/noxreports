@@ -6,7 +6,9 @@
 #' * `permanova_table()`, `dispersion_table()`: phipflow's PERMANOVA and
 #'   dispersion test results as report tables.
 #' * `permanova_result()`: the first PERMANOVA row as a list (`R2`, `p_value`, ...).
-#' * `pop_ranks()`: the ranks with POP plots, peptide level first.
+#' * `pop_ranks()`: the ranks with POP plots. `pop: ranks` in
+#'   `report_config.yml` selects and orders them; without that key every rank
+#'   phipflow plotted is shown, peptide level first.
 #' * `group_sizes()`: samples and subjects per group of a comparison.
 #' * `cmp_intro()`: question, design and group sizes, for the top of a page.
 #'
@@ -43,6 +45,8 @@ dispersion_table <- function(base, book = current_book()) {
 pop_ranks <- function(base, book = current_book()) {
   files <- list.files(res_fs(file.path(base, "POP_framework", "plots"), book), pattern = "_static\\.svg$")
   ranks <- sub("_static\\.svg$", "", files)
+  keep <- book$pop$ranks
+  if (!is.null(keep)) return(intersect(as.character(keep), ranks))
   c(intersect("peptide_id", ranks), setdiff(ranks, "peptide_id"))
 }
 

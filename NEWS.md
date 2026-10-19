@@ -1,3 +1,10 @@
+# noxreports 0.1.2
+
+* The profile plot tab of DELTA features now shows its plot: `style.css` had
+  no rule for the `profile` tab, so its panel stayed hidden. Books created
+  with 0.1.1 keep their own `style.css` and need the two `profile` lines added
+  by hand.
+
 # noxreports 0.1.1
 
 * DELTA feature pages lead with phipflow's profile plot where there is one

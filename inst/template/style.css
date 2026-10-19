@@ -272,6 +272,7 @@ img {
 }
 
 /* active tab label */
+.ph-tabs .ph-tab-input[data-tab="profile"]:checked ~ .ph-tabs-nav .ph-tab-label[data-tab="profile"],
 .ph-tabs .ph-tab-input[data-tab="scatter"]:checked ~ .ph-tabs-nav .ph-tab-label[data-tab="scatter"],
 .ph-tabs .ph-tab-input[data-tab="deltaplot"]:checked ~ .ph-tabs-nav .ph-tab-label[data-tab="deltaplot"],
 .ph-tabs .ph-tab-input[data-tab="ecdf"]:checked     ~ .ph-tabs-nav .ph-tab-label[data-tab="ecdf"] {
@@ -281,6 +282,7 @@ img {
 }
 
 /* active panel */
+.ph-tabs .ph-tab-input[data-tab="profile"]:checked ~ .ph-tabs-panels .ph-tab-panel[data-tab="profile"],
 .ph-tabs .ph-tab-input[data-tab="scatter"]:checked ~ .ph-tabs-panels .ph-tab-panel[data-tab="scatter"],
 .ph-tabs .ph-tab-input[data-tab="deltaplot"]:checked ~ .ph-tabs-panels .ph-tab-panel[data-tab="deltaplot"],
 .ph-tabs .ph-tab-input[data-tab="ecdf"]:checked     ~ .ph-tabs-panels .ph-tab-panel[data-tab="ecdf"] {
